@@ -13,11 +13,6 @@ public class User {
         this.id = id;
     }
 
-    public String getDataSlow() throws InterruptedException {
-        TimeUnit.SECONDS.sleep(5);
-        return RandomStringUtils.randomAlphabetic(1000);
-    }
-
     public UserData getUserData() throws InterruptedException {
         UserData uData = new UserData();
         if (Cache.has(id)) {
@@ -29,7 +24,12 @@ public class User {
         return uData;
     }
 
-    public void setTTL(int key) {
+    public String getDataSlow() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(5);
+        return RandomStringUtils.randomAlphabetic(1000);
+    }
+
+    public void setTTL(int key, int minutes) {
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
@@ -37,6 +37,6 @@ public class User {
                 Cache.delete(key);
             }
         };
-        timer.schedule(task, 100000); //1.5 minutes
+        timer.schedule(task, minutes * 60000);
     }
 }

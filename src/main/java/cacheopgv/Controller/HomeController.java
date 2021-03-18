@@ -15,7 +15,7 @@ public class HomeController {
     public String getUserData(@RequestParam int id) throws InterruptedException {
         User user = new User(id);
         UserData data = user.getUserData();
-        user.setTTL(id);
+        user.setTTL(id,1);
         return data.getData();
     }
 
